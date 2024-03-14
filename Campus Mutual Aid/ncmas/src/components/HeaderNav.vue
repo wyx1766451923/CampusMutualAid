@@ -58,6 +58,7 @@ const handleCommand=(command)=>{
 <style lang="scss" scoped>
 .el-menu--horizontal>.el-menu-item.is-active {
     color:rgb(39, 15, 219) !important;
+    background-color: rgba(0,0,0,0);
 }
 .header-nav{
     width: 100%;
