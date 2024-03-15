@@ -1,0 +1,21 @@
+
+server:
+  port: 8088
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      exclude: WEB-INF/**
+  freemarker:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ncmas?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    #mapper的xml文件路径
+    mybatis-plus:
+    mapper-locations: classpath:com/example/ncmashd/mapper/*.xml
+

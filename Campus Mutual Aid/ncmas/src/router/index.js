@@ -31,6 +31,10 @@ const router = createRouter({
         {
           path:'idleTransfer',
           component:()=>import('../views/IdleTransfer/index.vue')
+        },
+        {
+          path:'CampusInformationDetails/:id',
+          component:()=>import('../views/CampusInformationDetails/index.vue')
         }
       ]
     }
