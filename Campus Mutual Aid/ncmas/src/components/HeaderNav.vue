@@ -60,6 +60,9 @@ const handleCommand=(command)=>{
     color:rgb(39, 15, 219) !important;
     background-color: rgba(0,0,0,0);
 }
+.el-menu-item:hover{
+    color: black !important;
+}
 .header-nav{
     width: 100%;
     height: 100px;

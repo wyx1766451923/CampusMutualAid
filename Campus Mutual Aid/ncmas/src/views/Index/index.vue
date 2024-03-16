@@ -30,7 +30,7 @@
           <div class="top-info">
             <div class="top-info-item" v-for="topInfoItem in topinfo" :key="topInfoItem.id" @click="handleToInfoDetail(topInfoItem.id)">
               <div class="top-info-image">
-                <el-image style="width: 100%; height: 100%" :src="topInfoItem.imageurl" fit="cover" />
+                <el-image style="width: 100%; height: 100%" :src="publicUrl+topInfoItem.imageurl" fit="cover" />
               </div>
               <div class="top-title-info">
                 <div class="info-title">
@@ -49,9 +49,9 @@
             </div>
           </div>
           <div class="bottom-info">
-            <div class="bottom-info-item" v-for="bottomInfoItem in bottominfo" :key="bottomInfoItem.id"> 
+            <div class="bottom-info-item" v-for="bottomInfoItem in bottominfo" :key="bottomInfoItem.id" @click="handleToInfoDetail(bottomInfoItem.id)" > 
               <div class="bottom-info-image">
-                <el-image style="width: 100%; height: 100%" :src="bottomInfoItem.imageurl" fit="cover" />
+                <el-image style="width: 100%; height: 100%" :src="publicUrl+bottomInfoItem.imageurl" fit="cover" />
               </div>
               <div class="bottom-title-info">
                 <div class="bottom-info-title">
@@ -86,53 +86,29 @@ import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import http from '../../../api/http';
 import { publicUrl } from '../../../api/util'
-  const topinfo = [
-    {
-      id:1,
-      title:'测试标题1',
-      imageurl:'/image/swiper/swiper1.png',
-      content:'测试内容测试内容测试内容，测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容。',
-      releaseTime:"2024-3-14"
-    },
-    {
-      id:2,
-      title:'测试标题1',
-      imageurl:'/image/swiper/swiper1.png',
-      content:'测试内容测试内容测试内容，测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容。',
-      releaseTime:"2024-3-14"
-    }
-  ]
-  const bottominfo = [
 
-    {
-      id:3,
-      title:'测试标题1',
-      imageurl:'/image/swiper/swiper1.png',
-      content:'测试内容测试内容测试内容，测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容。',
-      releaseTime:"2024-3-14"
-    },
-    {
-      id:4,
-      title:'测试标题1',
-      imageurl:'/image/swiper/swiper1.png',
-      content:'测试内容测试内容测试内容，测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容。',
-      releaseTime:"2024-3-14"
-    },
-    {
-      id:5,
-      title:'测试标题1',
-      imageurl:'/image/swiper/swiper1.png',
-      content:'测试内容测试内容测试内容，测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容测试内容，测试内容测试内容测试内容测试内容。',
-      releaseTime:"2024-3-14"
-    }
-  ]
 
   const router = useRouter()
+
   let swiperData = ref([])
+  let topinfo = ref([])
+  let bottominfo = ref([])
+  const getCampusInfo = ()=>{
+    http.get('/campusinfo/getCampusinfos')
+    .then(res=>{
+      let campusdata = res.data.data.reverse()
+      // console.log(res.data)
+      topinfo.value = campusdata.slice(0,2)
+      bottominfo.value = campusdata.slice(2,5)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
   const getSwiper=()=>{
     http.get('/swiper/getSwipers')
     .then(res=>{
-      swiperData.value = res.data
+      swiperData.value = res.data.data
       
     })
     .catch(err=>{
@@ -159,6 +135,7 @@ import { publicUrl } from '../../../api/util'
   const modules=[Pagination, Scrollbar, A11y,Autoplay]
   onMounted(()=>{
     getSwiper()
+    getCampusInfo()
   })
 </script>
 
