@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 16/03/2024 19:33:21
+ Date: 17/03/2024 19:08:56
 */
 
 SET NAMES utf8mb4;
@@ -40,6 +40,29 @@ INSERT INTO `campusinfo` VALUES (4, '计算机科学与工程学院举行“返�
 INSERT INTO `campusinfo` VALUES (5, '学校举行“奋进新征程，建功新时代”教职工趣味运动会', '3月11日下午，为提升教职工幸福感、获得感，展现学校教职工良好的精神风貌，学校以“奋进新征程，建功新时代”为主题在花溪校区足球场举行教职工趣味运动会。校党委副书记张晓洪出席活动并致辞，开幕式由校工会兼职副主席、教代会副主任李川主持。\r\n\r\n本次运动会由广播体操开场展演及人桥接力、薪火相传、超级玛丽、珠行万里四个趣味运动项目组成，来自全校26个基层工会的近600名教职工参加运动会。比赛现场精彩纷呈、扣人心弦，教职工们团结一心、顽强拼搏，将个人技巧和团队协作精神融入比赛过程。\r\n\r\n经过紧张激烈的角逐，体育教学部工会、药学与生物工程学院工会、两江校区工会获本次比赛一等奖；机关第一工会、两江人工智能学院工会、基建后勤工会、应用技术学院商贸信息学院工会、机械工程学院工会、理学院工会获二等奖；管理学院工会、机关第二工会、直属单位工会、车辆工程学院工会、重庆知识产权学院工会、马克思主义学院工会、化学化工学院工会、电气与电子工程学院工会获三等奖。\r\n\r\n本次趣味运动会的举办，进一步丰富了教职工的业余文化生活，提高了大家的职业幸福感，引导了广大教职工继续保持昂扬向上的精神风貌，在各自的岗位上再展风采、再创佳绩，为构建和分享和谐校园作出贡献。', '/img/campusinfo/info5.png', '2024-3-14');
 
 -- ----------------------------
+-- Table structure for lostandfound
+-- ----------------------------
+DROP TABLE IF EXISTS `lostandfound`;
+CREATE TABLE `lostandfound`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `goodsName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '物品名称',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '丢失或拾取地址',
+  `time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '丢失或拾取时间',
+  `imageUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '描述',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '联系人姓名',
+  `ContactInformation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系方式',
+  `userid` int NOT NULL COMMENT '用户id',
+  `type` int NOT NULL COMMENT '拾取或者丢失0为丢失，1为拾取',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lostandfound
+-- ----------------------------
+INSERT INTO `lostandfound` VALUES (1, 'vivo手机', '一操场', '2024-3-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ：1766451923', 1, 0);
+
+-- ----------------------------
 -- Table structure for swiper
 -- ----------------------------
 DROP TABLE IF EXISTS `swiper`;
@@ -55,5 +78,23 @@ CREATE TABLE `swiper`  (
 INSERT INTO `swiper` VALUES (1, '/img/swiper/swiper1.png');
 INSERT INTO `swiper` VALUES (2, '/img/swiper/swiper2.png');
 INSERT INTO `swiper` VALUES (3, '/img/swiper/swiper3.png');
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `id` int NOT NULL COMMENT '用户id',
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户头像',
+  `Permissions` int NOT NULL COMMENT '用户权限，0为普通，1为管理员',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, '红树', '123456', '/img/avatar/avatar1.png', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

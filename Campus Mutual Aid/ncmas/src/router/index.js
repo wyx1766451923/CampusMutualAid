@@ -19,6 +19,7 @@ const router = createRouter({
         {
           path:'lostAndFound',
           component:()=>import('../views/LostAndFound/index.vue')
+
         },
         {
           path:'resourceSharing',
@@ -35,6 +36,10 @@ const router = createRouter({
         {
           path:'CampusInformationDetails/:id',
           component:()=>import('../views/CampusInformationDetails/index.vue')
+        },
+        {
+          path:'LostAndFoundDetail/:id',
+          component:()=>import('../views/LostAndFoundDetail/index.vue')
         }
       ]
     }
