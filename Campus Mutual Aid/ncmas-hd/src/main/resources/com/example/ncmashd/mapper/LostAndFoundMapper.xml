@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ncmashd.mapper.LostAndFoundMapper">
+    <select id="getLostAndFoundPage" resultType="com.example.ncmashd.entity.LostAndFound">
+       select *
+       from lostandfound
+        <where>
+            <if test="type != null ">
+                and type = #{type}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goodsName like concat('%',#{goodsName},'%')
+            </if>
+            <if test="time != null and time != ''">
+                and time = #{time}
+            </if>
+
+        </where>
+        limit #{page},#{size}
+
+    </select>
+    <select id="getLostAndFoundCount" resultType="java.lang.Long">
+        select count(*)
+        from lostandfound
+    </select>
+
+</mapper>

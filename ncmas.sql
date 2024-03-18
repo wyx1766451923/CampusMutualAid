@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 17/03/2024 19:08:56
+ Date: 18/03/2024 20:34:00
 */
 
 SET NAMES utf8mb4;
@@ -55,12 +55,37 @@ CREATE TABLE `lostandfound`  (
   `userid` int NOT NULL COMMENT '用户id',
   `type` int NOT NULL COMMENT '拾取或者丢失0为丢失，1为拾取',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lostandfound
 -- ----------------------------
-INSERT INTO `lostandfound` VALUES (1, 'vivo手机', '一操场', '2024-3-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ：1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (1, 'vivo手机', '一操场', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ：1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (2, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (3, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (4, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (5, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (6, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (7, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (8, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (9, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (10, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (11, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (12, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (13, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (14, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 0);
+INSERT INTO `lostandfound` VALUES (15, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (16, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (17, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (18, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (19, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (20, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (21, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (22, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (23, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (24, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (25, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (26, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
 
 -- ----------------------------
 -- Table structure for swiper

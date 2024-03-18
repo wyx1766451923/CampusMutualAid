@@ -5,8 +5,8 @@
     </div>
     <div class="main">
       <div class="tab">
-        <div class="found" :class="isSelected=='found'?'active':''" @click="handleSwitch('found')">找物品</div>
-        <div class="lost" :class="isSelected=='lost'?'active':''" @click="handleSwitch('lost')">寻失主</div>
+        <div class="found" :class="type==0?'active':''" @click="handleSwitch(0)">找物品</div>
+        <div class="lost" :class="type==1?'active':''" @click="handleSwitch(1)">寻失主</div>
       </div>
       <div class="search-publish">
         <div class="search">
@@ -24,6 +24,7 @@
             clearable
           />
           <el-button type="primary" @click="handleSearch">搜索</el-button>
+          <el-button type="primary" @click="handleReset">重置</el-button>
         </div>
         <div class="publish">
           <el-button type="primary" @click="handlePublish">发帖</el-button>
@@ -47,174 +48,228 @@
           </div>
         </div>
       </div>
+      <div class="pagination">
+        <el-pagination 
+          v-model:current-page="current"
+          :page-size="12"
+          layout="prev, pager, next" 
+          :total="total"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import http from '../../../api/http';
 import { lostAndFoundBackgroundImage,publicUrl } from '../../../api/util';
-let isSelected = ref('found')
-const goodsinput = ref('')
-const dateinput = ref('')
+let type = ref(0)
+let goodsinput = ref('')
+let dateinput = ref('')
 const router = useRouter()
-const goodsinfos = [
-  {
-    id:1,
-    goodsName:'vivo手机z50s哈哈版',
-    address:'一操场外跑道健步处杠杠',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:2,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:3,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:4,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:5,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:6,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:7,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:8,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:9,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:10,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:11,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  },
-  {
-    id:12,
-    goodsName:'vivo手机',
-    address:'一操场',
-    time:'2023-3-17',
-    imageUrl:'/img/lostandfound/lost1.png',
-    description:'在操场跑道外部丢失，拾取到请联系我',
-    name:'王大锤',
-    ContactInformation:'QQ:1766451923',
-    userid:1,
-    type:0
-  }
-]
-const handleSwitch=(selected)=>{
-  isSelected.value = selected
+const goodsinfos = ref([])
+let current = ref(1)
+let total = ref(0)
+// const goodsinfos = [
+//   {
+//     id:1,
+//     goodsName:'vivo手机z50s哈哈版',
+//     address:'一操场外跑道健步处杠杠',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:2,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:3,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:4,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:5,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:6,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:7,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:8,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:9,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:10,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:11,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   },
+//   {
+//     id:12,
+//     goodsName:'vivo手机',
+//     address:'一操场',
+//     time:'2023-3-17',
+//     imageUrl:'/img/lostandfound/lost1.png',
+//     description:'在操场跑道外部丢失，拾取到请联系我',
+//     name:'王大锤',
+//     ContactInformation:'QQ:1766451923',
+//     userid:1,
+//     type:0
+//   }
+// ]
+const handleCurrentChange=()=>{
+  getLostAndFoundInfo((current.value-1)*12,undefined,type.value)
+  console.log(current.value)
+}
+const getTotal=()=>{
+  http.get('/LostAndFound/getLostAndFoundCounts',{
+    params:{
+      type:type.value,
+    }
+  })
+  .then(res=>{
+    total.value = res.data.data
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+}
+const handleSwitch=(typeid)=>{
+  type.value = typeid
+  getTotal()
+  getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value)
+
 }
 const handleSearch=()=>{
-  console.log(goodsinput.value,dateinput.value)
+  getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value)
+}
+const handleReset=()=>{
+  goodsinput.value = ''
+  dateinput.value = ''
+  current.value = 1
+  getLostAndFoundInfo(undefined,undefined,type.value,undefined,undefined)
 }
 const handlePublish=()=>{
   console.log('publish')
 }
-let a = []
+const getLostAndFoundInfo=(page=0,size=12,type=0,goodsinput='',dateinput='')=>{
+  http.post('/LostAndFound/getLostAndFoundPage',{
+    page,
+    size,
+    type,
+    goodsName:goodsinput,
+    time:dateinput
+  })
+  .then(res=>{
+    console.log(res.data.data)
+    goodsinfos.value = res.data.data
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+}
 const handleToGoodsInfoDetail=(id)=>{
   console.log(id)
   router.push({
@@ -222,12 +277,16 @@ const handleToGoodsInfoDetail=(id)=>{
 
   })
 }
+onMounted(()=>{
+  getLostAndFoundInfo()
+  getTotal()
+})
 </script>
 
 <style lang="scss" scoped>
 .active{
   border: none !important;
-  font-size: 20px;
+
   background-color: rgb(63, 156, 209);
   color: white;
   transition: all 0.3s;
@@ -277,7 +336,6 @@ const handleToGoodsInfoDetail=(id)=>{
       border-radius: 20px;
       box-shadow: 0 5px 18px 1.8px rgb(201, 199, 199);
       display: flex;
-      justify-content: space-between;
       flex-wrap: wrap;
       .infoitem{
         transition: all 0.5s;
@@ -337,5 +395,11 @@ const handleToGoodsInfoDetail=(id)=>{
       }
     }
   }
+  .pagination{
+    padding: 5px 0;
+  }
+}
+.el-pagination{
+  justify-content: center;
 }
 </style>
