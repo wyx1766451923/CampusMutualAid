@@ -23,5 +23,55 @@
         select count(*)
         from lostandfound
     </select>
+    <select id="getLostAndFoundInfoById" resultMap="LostAndFoundResultMap">
+        select
+            l.*,
+            u.username,u.avatar,u.id
+        from lostandfound l left join user u on l.userid = u.id
+        where l.id = #{id}
+
+    </select>
+    <select id="getLostAndFoundCommentsById" resultMap="getLostAndFoundCommentsMap">
+        select
+            cot.*,
+            u.username,u.avatar,u.id
+        from comments cot left join user u on cot.userid = u.id
+        where cot.postid = #{id}
+    </select>
+    <resultMap id="getLostAndFoundCommentsMap" type="com.example.ncmashd.entity.Comments">
+        <id column="id" property="id" />
+        <result column="userid" property="userid" />
+        <result column="postid" property="postid" />
+        <result column="commentContent" property="commentContent" />
+        <result column="publishTime" property="publishTime" />
+        <association property="user" javaType="com.example.ncmashd.entity.User">
+            <id column="id" property="id" />
+            <result column="username" property="username" />
+            <result column="password" property="password" />
+            <result column="avatar" property="avatar" />
+            <result column="Permissions" property="Permissions" />
+        </association>
+    </resultMap>
+
+
+    <resultMap id="LostAndFoundResultMap" type="com.example.ncmashd.entity.LostAndFound">
+        <id column="id" property="id" />
+        <result column="goodsName" property="goodsName" />
+        <result column="address" property="address" />
+        <result column="time" property="time" />
+        <result column="imageUrl" property="imageUrl" />
+        <result column="description" property="description" />
+        <result column="name" property="name" />
+        <result column="userid" property="userid" />
+        <result column="ContactInformation" property="ContactInformation" />
+        <result column="type" property="type" />
+        <association property="user" javaType="com.example.ncmashd.entity.User">
+            <id column="id" property="id" />
+            <result column="username" property="username" />
+            <result column="password" property="password" />
+            <result column="avatar" property="avatar" />
+            <result column="Permissions" property="Permissions" />
+        </association>
+    </resultMap>
 
 </mapper>

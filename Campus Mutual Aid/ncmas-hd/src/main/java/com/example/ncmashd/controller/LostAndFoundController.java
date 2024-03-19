@@ -3,6 +3,7 @@ package com.example.ncmashd.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.PageList;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.ncmashd.entity.Comments;
 import com.example.ncmashd.entity.LostAndFound;
 import com.example.ncmashd.mapper.LostAndFoundMapper;
 import com.example.ncmashd.query.LostAndFoundQuery;
@@ -31,10 +32,10 @@ public class LostAndFoundController {
         }
     }
     @RequestMapping(value="getLostAndFoundCounts",method = RequestMethod.GET)
-    public JsonResult getLostAndFoundCounts(Integer type){
+    public JsonResult getLostAndFoundCounts(Integer type,String goodsName,String time){
         try{
 
-            Integer count = lostAndFoundService.getLostAndFoundCounts(type);
+            Integer count = lostAndFoundService.getLostAndFoundCounts(type,goodsName,time);
             return JsonResult.success(count);
         }
         catch (Exception e){
@@ -42,5 +43,30 @@ public class LostAndFoundController {
             return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
         }
     }
+    @RequestMapping(value = "/getLostAndFoundInfoById",method = RequestMethod.GET)
+    public JsonResult getLostAndFoundInfoById( Integer id){
+        try{
+
+            LostAndFound lost = lostAndFoundService.getLostAndFoundInfoById(id);
+            return JsonResult.success(lost);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
+    @RequestMapping(value="/getLostAndFoundCommentsById",method = RequestMethod.GET)
+    public JsonResult getLostAndFoundCommentsById(Integer id){
+        try{
+
+            List<Comments> list = lostAndFoundService.getLostAndFoundCommentsById(id);
+            return JsonResult.success(list);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
+
 
 }

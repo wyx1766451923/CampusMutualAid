@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RunWith(SpringRunner.class)
@@ -20,10 +21,12 @@ public class lostandfoundTests {
     private LostAndFoundService lostAndFoundService;
     @Test
     void test1(){
-        LostAndFoundQuery query = new LostAndFoundQuery();
-        PageList<LostAndFound> pagelist = lostAndFoundService.getLostAndFoundPage(query);
-        System.out.println(pagelist.getTotal());
-        pagelist.getRecords().forEach(System.out::println);
+        String time = "";
+        boolean as = StringUtils.hasText(time);
+        if(as){
+            System.out.println(as);
+        }
+
     }
 
 }

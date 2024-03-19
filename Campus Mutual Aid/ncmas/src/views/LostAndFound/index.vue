@@ -219,6 +219,21 @@ let total = ref(0)
 //     type:0
 //   }
 // ]
+//
+
+
+//节流函数
+function throttle(fn,delay = 1000) {
+  let timer = null
+  return function (...args){
+    if(timer == null){
+      timer = setTimeout(()=>{
+        fn.call(this,...args)
+        timer = null
+      },delay)
+    }
+  }
+}
 const handleCurrentChange=()=>{
   getLostAndFoundInfo((current.value-1)*12,undefined,type.value)
   console.log(current.value)
@@ -227,6 +242,8 @@ const getTotal=()=>{
   http.get('/LostAndFound/getLostAndFoundCounts',{
     params:{
       type:type.value,
+      goodsName:goodsinput.value,
+      time:dateinput.value
     }
   })
   .then(res=>{
@@ -242,15 +259,17 @@ const handleSwitch=(typeid)=>{
   getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value)
 
 }
-const handleSearch=()=>{
+const handleSearch=throttle(function(){
+  getTotal()
   getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value)
-}
-const handleReset=()=>{
+},500)
+const handleReset=throttle(function(){
   goodsinput.value = ''
   dateinput.value = ''
   current.value = 1
+  getTotal()
   getLostAndFoundInfo(undefined,undefined,type.value,undefined,undefined)
-}
+},500)
 const handlePublish=()=>{
   console.log('publish')
 }
@@ -264,7 +283,7 @@ const getLostAndFoundInfo=(page=0,size=12,type=0,goodsinput='',dateinput='')=>{
   })
   .then(res=>{
     console.log(res.data.data)
-    goodsinfos.value = res.data.data
+    goodsinfos.value = res.data.data.reverse()
   })
   .catch(err=>{
     console.log(err)

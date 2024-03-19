@@ -1,5 +1,6 @@
 package com.example.ncmashd.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -17,6 +18,9 @@ public class LostAndFound {
 
     private Integer userid;
     private Integer type;
+    @TableField(exist = false)
+    private User user;
+
 }
 
 
