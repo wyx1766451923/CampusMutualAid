@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.ncmashd.entity.Comments;
 import com.example.ncmashd.entity.LostAndFound;
 import com.example.ncmashd.mapper.LostAndFoundMapper;
+import com.example.ncmashd.query.CommentQuery;
 import com.example.ncmashd.query.LostAndFoundQuery;
 import com.example.ncmashd.service.LostAndFoundService;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,8 @@ public class LostAndFoundServiceImpl extends ServiceImpl<LostAndFoundMapper, Los
     }
 
     @Override
-    public List<Comments> getLostAndFoundCommentsById(Integer id) {
-        List<Comments> list = baseMapper.getLostAndFoundCommentsById(id);
+    public List<Comments> getLostAndFoundCommentsById(CommentQuery query) {
+        List<Comments> list = baseMapper.getLostAndFoundCommentsById(query);
         return list;
 
     }

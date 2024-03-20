@@ -16,6 +16,7 @@
             </if>
 
         </where>
+        order by id DESC
         limit #{page},#{size}
 
     </select>
@@ -26,17 +27,20 @@
     <select id="getLostAndFoundInfoById" resultMap="LostAndFoundResultMap">
         select
             l.*,
-            u.username,u.avatar,u.id
+            u.username,u.avatar,u.id,u.nickname
         from lostandfound l left join user u on l.userid = u.id
         where l.id = #{id}
+
 
     </select>
     <select id="getLostAndFoundCommentsById" resultMap="getLostAndFoundCommentsMap">
         select
             cot.*,
-            u.username,u.avatar,u.id
+            u.username,u.avatar,u.id,u.nickname
         from comments cot left join user u on cot.userid = u.id
         where cot.postid = #{id}
+        order by cot.id DESC
+        limit #{page},#{size}
     </select>
     <resultMap id="getLostAndFoundCommentsMap" type="com.example.ncmashd.entity.Comments">
         <id column="id" property="id" />
@@ -47,6 +51,7 @@
         <association property="user" javaType="com.example.ncmashd.entity.User">
             <id column="id" property="id" />
             <result column="username" property="username" />
+            <result column="nickname" property="nickname" />
             <result column="password" property="password" />
             <result column="avatar" property="avatar" />
             <result column="Permissions" property="Permissions" />
@@ -68,6 +73,7 @@
         <association property="user" javaType="com.example.ncmashd.entity.User">
             <id column="id" property="id" />
             <result column="username" property="username" />
+            <result column="nickname" property="nickname" />
             <result column="password" property="password" />
             <result column="avatar" property="avatar" />
             <result column="Permissions" property="Permissions" />

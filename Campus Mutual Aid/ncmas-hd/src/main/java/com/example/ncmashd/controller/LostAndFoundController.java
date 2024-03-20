@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.ncmashd.entity.Comments;
 import com.example.ncmashd.entity.LostAndFound;
 import com.example.ncmashd.mapper.LostAndFoundMapper;
+import com.example.ncmashd.query.CommentQuery;
 import com.example.ncmashd.query.LostAndFoundQuery;
 import com.example.ncmashd.service.LostAndFoundService;
 import com.example.ncmashd.uils.JsonResult;
@@ -55,11 +56,11 @@ public class LostAndFoundController {
             return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
         }
     }
-    @RequestMapping(value="/getLostAndFoundCommentsById",method = RequestMethod.GET)
-    public JsonResult getLostAndFoundCommentsById(Integer id){
+    @RequestMapping(value="/getLostAndFoundCommentsById",method = RequestMethod.POST)
+    public JsonResult getLostAndFoundCommentsById(@RequestBody CommentQuery query){
         try{
 
-            List<Comments> list = lostAndFoundService.getLostAndFoundCommentsById(id);
+            List<Comments> list = lostAndFoundService.getLostAndFoundCommentsById(query);
             return JsonResult.success(list);
         }
         catch (Exception e){

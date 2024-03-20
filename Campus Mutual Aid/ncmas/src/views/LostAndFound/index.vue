@@ -283,7 +283,7 @@ const getLostAndFoundInfo=(page=0,size=12,type=0,goodsinput='',dateinput='')=>{
   })
   .then(res=>{
     console.log(res.data.data)
-    goodsinfos.value = res.data.data.reverse()
+    goodsinfos.value = res.data.data
   })
   .catch(err=>{
     console.log(err)

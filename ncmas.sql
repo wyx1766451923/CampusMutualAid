@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 19/03/2024 21:14:56
+ Date: 20/03/2024 20:11:49
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `comments`  (
   `commentContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
   `publishTime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '发布时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comments
@@ -58,6 +58,11 @@ CREATE TABLE `comments`  (
 INSERT INTO `comments` VALUES (1, 1, 1, '这个好像是我室友的我去问问', '2024-03-18');
 INSERT INTO `comments` VALUES (2, 1, 1, '确实是我室友的，我让他联系你', '2024-03-18');
 INSERT INTO `comments` VALUES (3, 1, 1, '搞错了，不是他的，对不起', '2024-03-18');
+INSERT INTO `comments` VALUES (4, 1, 1, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '2024-03-18');
+INSERT INTO `comments` VALUES (5, 1, 1, '没想到吧我又回来了', '2024-03-18');
+INSERT INTO `comments` VALUES (6, 1, 1, '还是我，我就住在这里了', '2024-03-18');
+INSERT INTO `comments` VALUES (7, 1, 1, '顶顶顶，这个到底是谁的', '2024-03-18');
+INSERT INTO `comments` VALUES (8, 1, 1, '来人速来认领啊，干啥呢', '2024-03-18');
 
 -- ----------------------------
 -- Table structure for lostandfound
@@ -134,12 +139,13 @@ CREATE TABLE `user`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户头像',
   `Permissions` int NOT NULL COMMENT '用户权限，0为普通，1为管理员',
+  `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '昵称',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '红树', '123456', '/img/avatar/avatar1.png', 1);
+INSERT INTO `user` VALUES (1, '1766451923', '123456', '/img/avatar/avatar1.png', 1, '红树');
 
 SET FOREIGN_KEY_CHECKS = 1;

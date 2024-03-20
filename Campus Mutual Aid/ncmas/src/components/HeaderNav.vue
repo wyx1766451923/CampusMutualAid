@@ -18,11 +18,12 @@
             <el-menu-item index="/home/idleTransfer">闲置转让</el-menu-item>
         </el-menu>
     </div>
-    <div class="nav-user">
+    <div class="nav-user" v-if="isLogin">
         <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link">
-                <el-avatar :icon="UserFilled" />
-            </span>
+            <div class="myAvatar">
+                <el-image style="width: 100%; height: 100%" :src="publicUrl+userInfo.avatar" fit="cover" />
+            </div>
+
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item command="personalCenter">个人中心</el-dropdown-item>
@@ -30,28 +31,49 @@
                 </el-dropdown-menu>
             </template>
         </el-dropdown>
-        <div class="username">
-            红树
+        <div class="nickname">
+            {{userInfo.nickname }}
+        </div>
+    </div>
+    <div class="nav-user" v-else>
+        <el-dropdown >
+            <el-avatar :icon="UserFilled" />
+        </el-dropdown>
+        <div class="nickname" @click="handleLogin">
+            未登录
         </div>
     </div>
  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 
 import { useRouter } from 'vue-router';
 import { UserFilled } from '@element-plus/icons-vue'
+import { publicUrl } from '../../api/util';
 const router = useRouter()
+const userInfo = ref('')
+const isLogin = ref(false)
+const handleLogin=()=>{
+    router.push({
+        path:"/Login"
+    })
+}
 const handleCommand=(command)=>{
     if(command=="personalCenter"){
         console.log("turn to person")
     }
     if(command=="logout"){
-        console.log("logout")
+        localStorage.removeItem("isLogin")
+        localStorage.removeItem("userinfo")
+        location.reload()
     }
 }
-
+onMounted(() => {
+    userInfo.value = JSON.parse(localStorage.getItem('userinfo'))
+    isLogin.value = localStorage.getItem('isLogin')
+})
 
 </script>
 
@@ -98,7 +120,13 @@ const handleCommand=(command)=>{
         margin: auto 50px;
         cursor: pointer;
         display: flex;
-        .username{
+        .myAvatar{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .nickname{
             width: 100%;
             font-size: 14px;
             text-align: center;

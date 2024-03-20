@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.PageList;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.ncmashd.entity.Comments;
 import com.example.ncmashd.entity.LostAndFound;
+import com.example.ncmashd.query.CommentQuery;
 import com.example.ncmashd.query.LostAndFoundQuery;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface LostAndFoundService extends IService<LostAndFound> {
 
     LostAndFound getLostAndFoundInfoById(Integer id);
 
-    List<Comments> getLostAndFoundCommentsById(Integer id);
+    List<Comments> getLostAndFoundCommentsById(CommentQuery query);
 }

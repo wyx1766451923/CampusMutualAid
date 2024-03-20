@@ -13,8 +13,8 @@
             <div class="avatar">
               <el-avatar :size="50" :src="publicUrl+sticker.avatar" />
             </div>
-            <div class="username">
-              {{ sticker.username }}
+            <div class="nickname">
+              {{ sticker.nickname }}
             </div>
           </div>
 
@@ -47,19 +47,24 @@
         
       </div>
       <div class="comments">
-        <div class="topic">
-          评论
+        <div class="topic-opr">
+          <div class="topic">
+            评论
+          </div>
+          <div class="op">
+            <el-button type="primary" @click="handleComment()">评论</el-button>
+          </div>
         </div>
-        <div class="postcomments">
+        <div class="postcomments" ref="commentsRef" @scroll="handleScroll">
           <div class="commentsItem" v-for="commentsitem in comments">
             <div class="commentavatar">
-              <el-avatar :size="50" :src="publicUrl+commentsitem.user.avatar" />
+              <el-avatar :size="40" :src="publicUrl+commentsitem.user.avatar" />
 
             </div>
             <div class="usercommentinfo">
-              <div class="username-publishtime">
-                <div class="username">
-                  {{ commentsitem.user.username }}
+              <div class="nickname-publishtime">
+                <div class="nickname">
+                  {{ commentsitem.user.nickname }}
                 </div>
                 <div class="publishTime">
                   {{ commentsitem.publishTime }}
@@ -70,10 +75,37 @@
               </div>
             </div>
           </div>
+          <div class="noMore" v-if="commentCount<7">
+            没有更多评论了~~
+          </div>
         </div>
+
       </div>
     </div>
+      <div class="publishComment" v-show="pubComShow">
+        <div class="commentTextArea">
+          <el-input
+            v-model="mycomment"
+            style="width: 240px;"
+            :rows="3"
+            resize="none"
+            type="textarea"
+            maxlength="40"
+            show-word-limit
+            placeholder="请输入评论"
+          />
+        </div>
+        <div class="ibutton">
+          <div class="cancelButton">
+            <el-button type="info" @click="handleCancel">取消</el-button>
+          </div>
+          <div class="publishButton">
+            <el-button type="success" @click="handlePublish">发表</el-button>
+          </div>
+        </div>
+      </div>
   </div>
+
 </template>
 
 <script setup>
@@ -87,14 +119,58 @@ const id = ref(1)
 const lostAndFoundInfo = ref('')
 const sticker = ref('')
 const comments = ref([])
-const getLostAndFoundCommentsById=()=>{
-  http.get("/LostAndFound/getLostAndFoundCommentsById",{
-    params:{
-      id:id.value
+const commentsRef = ref(null)
+const commentCount = ref(0)
+const loading = ref(false)
+let page = ref(1)
+let size = ref(7)
+const pubComShow = ref(false)
+const mycomment = ref('')
+
+function throttle(fn,delay = 1000) {//节流
+  let timer = null
+  return function (...args){
+    if(timer == null){
+      timer = setTimeout(()=>{
+        fn.call(this,...args)
+        timer = null
+      },delay)
     }
+  }
+}
+const handleComment=()=>{
+  pubComShow.value = true
+}
+const handlePublish=()=>{
+  console.log(mycomment.value)
+  mycomment.value=''
+  pubComShow.value = false
+}
+const handleCancel=()=>{
+  mycomment.value=''
+  pubComShow.value = false
+}
+const handleScroll=throttle(function(){
+  const comment = commentsRef.value
+      if (comment.scrollTop + comment.clientHeight >= comment.scrollHeight-1) {
+        loading.value = true
+        page.value = page.value+1
+        // loadMore()
+        getLostAndFoundCommentsById((page.value-1)*size.value,undefined,id.value )
+        console.log('到底了');
+      }
+},500)
+const getLostAndFoundCommentsById=(page=0,size=7,id)=>{
+  http.post("/LostAndFound/getLostAndFoundCommentsById",{
+    page,
+    size,
+    id
   })
   .then(res=>{
-    comments.value = res.data.data
+
+    comments.value = [...comments.value,...res.data.data]
+    commentCount.value = res.data.data.length
+    loading.value = false
   })
   .catch(err=>{
     console.log(err)
@@ -119,7 +195,7 @@ onMounted(() => {
   id.value = route.params.id
   console.log("id:"+id.value,"params"+route.params.id)
   getLostAndFoundInfoById(route.params.id)
-  getLostAndFoundCommentsById(route.params.id)
+  getLostAndFoundCommentsById(undefined,undefined,route.params.id)
   // getLostAndFoundInfoById()
 
 })
@@ -128,7 +204,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .LostAndFoundDetail{
   width: 100%;
-
+  position: relative;
   .bg{
     width: 100%;
     height: 400px;
@@ -163,10 +239,10 @@ onMounted(() => {
         .userinfo{
           display: flex;
           align-items: center;
-          .avatar{
+          // .avatar{
 
-          }
-          .username{
+          // }
+          .nickname{
             margin-left: 10px;
           }
         }
@@ -246,6 +322,13 @@ onMounted(() => {
     background-color: white;
     box-shadow: 0 5px 18px 1.8px rgba(34, 97, 149,0.8);
     border-radius: 10px;
+    .topic-opr{
+      display: flex;
+      justify-content: space-between;
+      .op{
+        margin: 5px 10px 0 0;
+      }
+    }
     .topic{
       margin: 10px 0 10px 10px;
 
@@ -256,19 +339,78 @@ onMounted(() => {
       padding-right: 5px;
       
     }
+    .postcomments::-webkit-scrollbar{
+      display: none;
+    }
     .postcomments{
+      height: 450px;
+      overflow: auto;
       .commentsItem{
         display: flex;
+        padding: 10px 8px;
         .commentavatar{
-
+          padding-right: 10px;
         }
         .usercommentinfo{
-          .username-publishtime{
+          .nickname-publishtime{
             display: flex;
+            .nickname{
+              font-size: 16px;
+              font-weight:bold;
+
+            }
+            .publishTime{
+              padding-left: 20px;
+              font-size: 12px;
+              line-height: 20px;
+              color: gray;
+            }
           }
+          .commentContent{
+            font-size: 14px;
+            background-color: rgb(215, 213, 213);
+            border-radius: 5px;
+            padding: 3px 5px;
+            margin: 5px 0 0 2px;
+            color: rgb(112, 111, 111);
+          }
+
         }
+        
       }
     }
+    .noMore{
+      text-align: center;
+      margin: 5px 0;
+      font-size: 14px;
+      color: gray;
+    }
+  }
+
+  .publishComment{
+    position: absolute;
+    right: 38px;
+    bottom: 20rem;
+    width: 280px;
+    height: 150px;
+    background-color: rgba(240, 249, 249,1);
+    box-shadow: 0 5px 18px 1.8px rgba(240, 249, 249,0.5);
+    border-radius: 20px;
+    .commentTextArea{
+      margin: 0 0 10px 20px;
+      padding-top: 20px;
+    }
+    .ibutton{
+      display: flex;
+      justify-content: space-between;
+      .cancelButton{
+        padding-left: 20px;
+      }
+      .publishButton{
+        padding-right: 20px;
+      }
+    }
+
   }
 }
 </style>
