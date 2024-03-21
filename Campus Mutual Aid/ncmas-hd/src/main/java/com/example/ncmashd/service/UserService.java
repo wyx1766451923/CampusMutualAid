@@ -8,4 +8,6 @@ import java.util.Map;
 
 public interface UserService extends IService<User> {
     Map<String, Object> login(LoginQuery query);
+
+    Map<String, Object> register(LoginQuery query);
 }

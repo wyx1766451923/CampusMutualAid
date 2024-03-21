@@ -33,6 +33,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import http from "../../../api/http";
 import { ElMessage } from 'element-plus'
+import { defaultAvatar,defaultNickname } from '../../../api/util'
 const myType = ref(1)//0注册，1登录
 const confirmPassword = ref('')
 const formLabelAlign = reactive({
@@ -80,19 +81,38 @@ const onLogin = () => {
             console.log(err);
         });
     }
-    // if(myType.value == 0){
-    //     if(formLabelAlign.password == confirmPassword.value){
-    //         ElMessage({
-    //             message: '注册',
-    //             type: 'success',
-    //         })
-    //     }else{
-    //         ElMessage({
-    //             message: '密码不一致',
-    //             type: 'error',
-    //         })
-    //     }
-    // }
+    if(myType.value == 0){
+        if(formLabelAlign.password == confirmPassword.value){
+            http.post('/user/register',{
+                username:formLabelAlign.username,
+                password: formLabelAlign.password,
+                avatar:defaultAvatar,
+                nickname:defaultNickname,
+                Permissions:0
+            })
+            .then(res=>{
+                if(res.data.data.register == 'exist'){
+                    ElMessage({
+                        message: '账户已存在，请直接登陆！',
+                        type: 'warning',
+                    })
+                }else{
+                    ElMessage({
+                        message: '注册成功',
+                        type: 'success',
+                    })
+                    myType.value = 1
+                    formLabelAlign.password=''
+                    confirmPassword.value=''
+                }
+            })
+        }else{
+            ElMessage({
+                message: '密码不一致',
+                type: 'error',
+            })
+        }
+    }
 }
 
 </script>

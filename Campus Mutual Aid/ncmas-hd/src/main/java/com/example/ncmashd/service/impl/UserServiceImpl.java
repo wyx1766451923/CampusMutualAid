@@ -32,4 +32,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         map.put("userinfo",user);
         return map;
     }
+
+    @Override
+    public Map<String, Object> register(LoginQuery query) {
+
+        User user = baseMapper.selectByUsername(query.getUsername());
+        Map<String,Object> map = new HashMap<>();
+        if(user != null){
+            map.put("register","exist");
+            return map;
+        }else{
+            Integer resId = baseMapper.register(query);
+            map.put("register","ok");
+            return map;
+        }
+    }
 }

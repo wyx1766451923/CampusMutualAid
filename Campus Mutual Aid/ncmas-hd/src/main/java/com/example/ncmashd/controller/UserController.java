@@ -30,7 +30,18 @@ public class UserController {
             return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
         }
     }
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public JsonResult register(@RequestBody LoginQuery query){
+        try{
 
+            Map<String,Object> map = userService.register(query);
+            return JsonResult.success(map);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
     @RequestMapping(value = "/getUserInfo",method = RequestMethod.GET)
     public JsonResult getUserInfo(Integer id){
         try{

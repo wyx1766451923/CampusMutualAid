@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 20/03/2024 20:11:49
+ Date: 21/03/2024 15:02:28
 */
 
 SET NAMES utf8mb4;
@@ -134,18 +134,20 @@ INSERT INTO `swiper` VALUES (3, '/img/swiper/swiper3.png');
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` int NOT NULL COMMENT '用户id',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户头像',
-  `Permissions` int NOT NULL COMMENT '用户权限，0为普通，1为管理员',
+  `Permissions` int NULL DEFAULT NULL COMMENT '用户权限，0为普通，1为管理员',
   `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '昵称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, '1766451923', '123456', '/img/avatar/avatar1.png', 1, '红树');
+INSERT INTO `user` VALUES (3, '1766451921', '123456', '/img/avatar/avatar1.png', 0, 'hahaha');
+INSERT INTO `user` VALUES (4, '15523083645', '123456', '/img/avatar/avatar1.png', 0, '大家帮用户');
 
 SET FOREIGN_KEY_CHECKS = 1;

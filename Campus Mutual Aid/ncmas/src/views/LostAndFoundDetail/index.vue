@@ -113,7 +113,9 @@
 import { useRoute } from "vue-router";
 import {onMounted, ref} from 'vue' 
 import { lostAndFoundBackgroundImage ,publicUrl} from "../../../api/util";
+import { ElMessage, ElMessageBox } from 'element-plus'
 import http from "../../../api/http";
+import router from "@/router";
 const route = useRoute()
 const id = ref(1)
 const lostAndFoundInfo = ref('')
@@ -124,6 +126,7 @@ const commentCount = ref(0)
 const loading = ref(false)
 let page = ref(1)
 let size = ref(7)
+const isLogin = ref(false)
 const pubComShow = ref(false)
 const mycomment = ref('')
 
@@ -139,7 +142,28 @@ function throttle(fn,delay = 1000) {//节流
   }
 }
 const handleComment=()=>{
-  pubComShow.value = true
+  if(isLogin.value){
+    pubComShow.value = true
+  }else{
+    console.log(isLogin.value)
+    ElMessageBox.alert('未登录，是否跳转登录？', '登录', {
+
+      confirmButtonText: 'OK',
+      callback: (action) => {
+
+        if(action=='cancel'){
+          console.log('取消登录')
+        }else{
+          router.push({
+            path:'/login'
+          })
+        }
+
+
+      },
+    })
+  }
+  
 }
 const handlePublish=()=>{
   console.log(mycomment.value)
@@ -193,7 +217,8 @@ const getLostAndFoundInfoById=(id)=>{
 }
 onMounted(() => {
   id.value = route.params.id
-  console.log("id:"+id.value,"params"+route.params.id)
+  isLogin.value = localStorage.getItem('isLogin')
+  console.log(isLogin.value)
   getLostAndFoundInfoById(route.params.id)
   getLostAndFoundCommentsById(undefined,undefined,route.params.id)
   // getLostAndFoundInfoById()
