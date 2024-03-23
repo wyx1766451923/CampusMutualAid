@@ -26,6 +26,10 @@ const router = createRouter({
 
         },
         {
+          path:'publishLostAndFoundInfo',
+          component:()=>import('../views/LostAndFound/publishLostAndFoundInfo.vue')
+        },
+        {
           path:'resourceSharing',
           component:()=>import('../views/ResourceSharing/index.vue')
         },

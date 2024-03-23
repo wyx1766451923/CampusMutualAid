@@ -165,10 +165,50 @@ const handleComment=()=>{
   }
   
 }
+
+const getNowDate = ()=>{
+  const date = new Date();
+  const year = date.getFullYear().toString().padStart(4, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hour = date.getHours().toString().padStart(2, '0');
+  const minute = date.getMinutes().toString().padStart(2, '0');
+  const second = date.getSeconds().toString().padStart(2, '0');
+  const publishTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`
+  return publishTime
+}
 const handlePublish=()=>{
   console.log(mycomment.value)
-  mycomment.value=''
-  pubComShow.value = false
+  const publishTime = getNowDate()
+  const userid = JSON.parse(localStorage.getItem('userinfo')).id
+  const postid = id.value
+  http.post('/comments/publishComment',{
+    userid:userid,
+    postid:postid,
+    commentContent:mycomment.value,
+    publishTime:publishTime
+  })
+  .then(res=>{
+    if(res.data.data.publishComment == 'ok'){
+      ElMessage({
+        message: '评论成功',
+        type: 'success',
+      })
+      mycomment.value=''
+      pubComShow.value = false
+      comments.value = []
+      getLostAndFoundCommentsById(undefined,undefined,postid)
+    }else{
+      ElMessage({
+        message: '评论失败！请联系管理员',
+        type: 'error',
+      })
+    }
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+ 
 }
 const handleCancel=()=>{
   mycomment.value=''
@@ -218,7 +258,6 @@ const getLostAndFoundInfoById=(id)=>{
 onMounted(() => {
   id.value = route.params.id
   isLogin.value = localStorage.getItem('isLogin')
-  console.log(isLogin.value)
   getLostAndFoundInfoById(route.params.id)
   getLostAndFoundCommentsById(undefined,undefined,route.params.id)
   // getLostAndFoundInfoById()

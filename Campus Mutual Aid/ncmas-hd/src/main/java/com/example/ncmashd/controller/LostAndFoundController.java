@@ -8,6 +8,7 @@ import com.example.ncmashd.entity.LostAndFound;
 import com.example.ncmashd.mapper.LostAndFoundMapper;
 import com.example.ncmashd.query.CommentQuery;
 import com.example.ncmashd.query.LostAndFoundQuery;
+import com.example.ncmashd.query.PublishLostAndFoundInfoQuery;
 import com.example.ncmashd.service.LostAndFoundService;
 import com.example.ncmashd.uils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/LostAndFound")
@@ -66,6 +68,18 @@ public class LostAndFoundController {
         catch (Exception e){
             e.printStackTrace();
             return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
+    @RequestMapping(value="/publishLostAndFoundInfo",method = RequestMethod.POST)
+    public JsonResult publishLostAndFoundInfo(@RequestBody PublishLostAndFoundInfoQuery query){
+        try{
+
+            Map<String,Object> map= lostAndFoundService.publishLostAndFoundInfo(query);
+            return JsonResult.success(map);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return  JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
         }
     }
 

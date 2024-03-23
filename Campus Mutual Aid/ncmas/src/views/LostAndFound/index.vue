@@ -73,153 +73,6 @@ const router = useRouter()
 const goodsinfos = ref([])
 let current = ref(1)
 let total = ref(0)
-// const goodsinfos = [
-//   {
-//     id:1,
-//     goodsName:'vivo手机z50s哈哈版',
-//     address:'一操场外跑道健步处杠杠',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:2,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:3,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:4,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:5,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:6,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:7,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:8,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:9,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:10,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:11,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   },
-//   {
-//     id:12,
-//     goodsName:'vivo手机',
-//     address:'一操场',
-//     time:'2023-3-17',
-//     imageUrl:'/img/lostandfound/lost1.png',
-//     description:'在操场跑道外部丢失，拾取到请联系我',
-//     name:'王大锤',
-//     ContactInformation:'QQ:1766451923',
-//     userid:1,
-//     type:0
-//   }
-// ]
-//
 
 
 //节流函数
@@ -271,7 +124,29 @@ const handleReset=throttle(function(){
   getLostAndFoundInfo(undefined,undefined,type.value,undefined,undefined)
 },500)
 const handlePublish=()=>{
-  console.log('publish')
+  const isLogin = localStorage.getItem('isLogin')
+  if(isLogin){
+    router.push({
+      path:'/home/publishLostAndFoundInfo'
+    })
+  }else{
+    ElMessageBox.alert('未登录，是否跳转登录？', '登录', {
+
+      confirmButtonText: 'OK',
+      callback: (action) => {
+
+        if(action=='cancel'){
+          console.log('取消登录')
+        }else{
+          router.push({
+            path:'/login'
+          })
+        }
+
+
+      },
+    })
+  }
 }
 const getLostAndFoundInfo=(page=0,size=12,type=0,goodsinput='',dateinput='')=>{
   http.post('/LostAndFound/getLostAndFoundPage',{
@@ -367,6 +242,7 @@ onMounted(()=>{
         box-shadow: 0 5px 18px 1.8px rgb(216, 226, 240);
         .goodsimage{
           width: 200px;
+          height: 150px;
           border-radius: 10px;
           overflow: hidden;
         }

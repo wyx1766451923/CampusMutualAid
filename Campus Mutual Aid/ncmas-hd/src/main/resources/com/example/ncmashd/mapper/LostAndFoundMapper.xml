@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.ncmashd.mapper.LostAndFoundMapper">
+    <insert id="publishLostAndFoundInfo">
+        INSERT into lostandfound(goodsName,address,time,imageUrl,description,contactInformation,name,userid,type)
+        VALUES(#{goodsName},#{address},#{time},#{imageUrl},#{description},#{contactInformation},#{name},#{userid},#{type})
+    </insert>
     <select id="getLostAndFoundPage" resultType="com.example.ncmashd.entity.LostAndFound">
        select *
        from lostandfound
@@ -68,7 +72,7 @@
         <result column="description" property="description" />
         <result column="name" property="name" />
         <result column="userid" property="userid" />
-        <result column="ContactInformation" property="ContactInformation" />
+        <result column="contactInformation" property="contactInformation" />
         <result column="type" property="type" />
         <association property="user" javaType="com.example.ncmashd.entity.User">
             <id column="id" property="id" />

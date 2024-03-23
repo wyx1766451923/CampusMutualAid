@@ -15,7 +15,7 @@
                     <el-input v-model="formLabelAlign.username" placeholder="请输入用户名" />
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="formLabelAlign.password" placeholder="请输入密码" show-password />
+                    <el-input v-model="formLabelAlign.password" placeholder="请输入密码" show-password/>
                 </el-form-item>
                 <el-form-item v-if="myType==0">
                     <el-input v-model="confirmPassword" placeholder="请确认密码" show-password />
@@ -43,77 +43,119 @@ const formLabelAlign = reactive({
 })
 
 const router = useRouter()
+function throttle(fn,delay = 1000) {//节流
+  let timer = null
+  return function (...args){
+    if(timer == null){
+      timer = setTimeout(()=>{
+        fn.call(this,...args)
+        timer = null
+      },delay)
+    }
+  }
+}
 const handleTab=(type)=>{
     myType.value = type
     formLabelAlign.password=''
     confirmPassword.value=''
 }
-const onLogin = () => {
+const onLogin = throttle(function(){
     if(myType.value == 1){
-        http.post('/user/login', {
-            username: formLabelAlign.username,
-            password: formLabelAlign.password
-        })
-        .then(res=> {
-            console.log(res)
-            if (res.data.data.login == 'ok') {
-                let userinfo = res.data.data.userinfo
-                localStorage.setItem('isLogin',true)
-                localStorage.setItem('userinfo', JSON.stringify(userinfo))
-                ElMessage({
-                    message: '登陆成功',
-                    type: 'success',
-                })
-                router.push('/home')
-            } else if (res.data.data.login == 'pwdErro') {
-                ElMessage({
-                    message: '密码错误，请检查您的密码',
-                    type: 'error',
-                })
-            } else {
-                ElMessage({
-                    message: '没有此用户!请注册',
-                    type: 'error',
-                })
-            }
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
+        if(formLabelAlign.username!='' && formLabelAlign.password!=''){
+            http.post('/user/login', {
+                username: formLabelAlign.username,
+                password: formLabelAlign.password
+            })
+            .then(res=> {
+                console.log(res)
+                if (res.data.data.login == 'ok') {
+                    let userinfo = res.data.data.userinfo
+                    localStorage.setItem('isLogin',true)
+                    localStorage.setItem('userinfo', JSON.stringify(userinfo))
+                    ElMessage({
+                        message: '登陆成功',
+                        type: 'success',
+                    })
+                    router.push('/home')
+                } else if (res.data.data.login == 'pwdErro') {
+                    ElMessage({
+                        message: '密码错误，请检查您的密码',
+                        type: 'error',
+                    })
+                } else {
+                    ElMessage({
+                        message: '没有此用户!请注册',
+                        type: 'error',
+                    })
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+        }else{
+            ElMessage({
+                message: '账号/密码未填写',
+                type: 'warning',
+            })
+        }
+        
     }
     if(myType.value == 0){
-        if(formLabelAlign.password == confirmPassword.value){
-            http.post('/user/register',{
-                username:formLabelAlign.username,
-                password: formLabelAlign.password,
-                avatar:defaultAvatar,
-                nickname:defaultNickname,
-                Permissions:0
-            })
-            .then(res=>{
-                if(res.data.data.register == 'exist'){
+        if(formLabelAlign.username!='' && formLabelAlign.password!='' && confirmPassword.value != ''){
+            if(formLabelAlign.password == confirmPassword.value){
+                if(formLabelAlign.username.length<8 || formLabelAlign.username.length>10){
                     ElMessage({
-                        message: '账户已存在，请直接登陆！',
+                        message: '账号长度应该在6-10！',
+                        type: 'warning',
+                    })
+                }else if(formLabelAlign.password.length<6 || formLabelAlign.password.length>12){
+                    ElMessage({
+                        message: '密码长度应该在6-12！',
                         type: 'warning',
                     })
                 }else{
-                    ElMessage({
-                        message: '注册成功',
-                        type: 'success',
+                    http.post('/user/register',{
+                        username:formLabelAlign.username,
+                        password: formLabelAlign.password,
+                        avatar:defaultAvatar,
+                        nickname:defaultNickname,
+                        Permissions:0
                     })
-                    myType.value = 1
-                    formLabelAlign.password=''
-                    confirmPassword.value=''
+                    .then(res=>{
+                        if(res.data.data.register == 'exist'){
+                            ElMessage({
+                                message: '账户已存在，请直接登陆！',
+                                type: 'warning',
+                            })
+                        }else{
+                            ElMessage({
+                                message: '注册成功',
+                                type: 'success',
+                            })
+                            myType.value = 1
+                            formLabelAlign.password=''
+                            confirmPassword.value=''
+                        }
+                    })
                 }
-            })
+                
+            }else{
+                ElMessage({
+                    message: '密码不一致',
+                    type: 'error',
+                })
+            }
         }else{
             ElMessage({
-                message: '密码不一致',
-                type: 'error',
+                message: '账号/密码未填写',
+                type: 'warning',
             })
         }
+        
     }
-}
+},500)
+    
+
 
 </script>
   

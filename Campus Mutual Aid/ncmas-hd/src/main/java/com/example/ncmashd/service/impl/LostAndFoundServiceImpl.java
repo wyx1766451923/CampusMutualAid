@@ -8,11 +8,14 @@ import com.example.ncmashd.entity.LostAndFound;
 import com.example.ncmashd.mapper.LostAndFoundMapper;
 import com.example.ncmashd.query.CommentQuery;
 import com.example.ncmashd.query.LostAndFoundQuery;
+import com.example.ncmashd.query.PublishLostAndFoundInfoQuery;
 import com.example.ncmashd.service.LostAndFoundService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LostAndFoundServiceImpl extends ServiceImpl<LostAndFoundMapper, LostAndFound> implements LostAndFoundService {
@@ -48,6 +51,19 @@ public class LostAndFoundServiceImpl extends ServiceImpl<LostAndFoundMapper, Los
         List<Comments> list = baseMapper.getLostAndFoundCommentsById(query);
         return list;
 
+    }
+
+    @Override
+    public Map<String, Object> publishLostAndFoundInfo(PublishLostAndFoundInfoQuery query) {
+
+        Map<String,Object> map = new HashMap<>();
+        Integer resid = baseMapper.publishLostAndFoundInfo(query);
+        if(resid > 0){
+            map.put("publishLostAndFoundInfo","ok");
+        }else{
+            map.put("publishLostAndFoundInfo","error");
+        }
+        return map;
     }
 
 }

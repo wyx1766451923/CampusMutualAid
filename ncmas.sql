@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 21/03/2024 15:02:28
+ Date: 23/03/2024 21:16:10
 */
 
 SET NAMES utf8mb4;
@@ -50,19 +50,24 @@ CREATE TABLE `comments`  (
   `commentContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
   `publishTime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '发布时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
-INSERT INTO `comments` VALUES (1, 1, 1, '这个好像是我室友的我去问问', '2024-03-18');
-INSERT INTO `comments` VALUES (2, 1, 1, '确实是我室友的，我让他联系你', '2024-03-18');
-INSERT INTO `comments` VALUES (3, 1, 1, '搞错了，不是他的，对不起', '2024-03-18');
-INSERT INTO `comments` VALUES (4, 1, 1, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '2024-03-18');
-INSERT INTO `comments` VALUES (5, 1, 1, '没想到吧我又回来了', '2024-03-18');
-INSERT INTO `comments` VALUES (6, 1, 1, '还是我，我就住在这里了', '2024-03-18');
-INSERT INTO `comments` VALUES (7, 1, 1, '顶顶顶，这个到底是谁的', '2024-03-18');
-INSERT INTO `comments` VALUES (8, 1, 1, '来人速来认领啊，干啥呢', '2024-03-18');
+INSERT INTO `comments` VALUES (1, 1, 1, '这个好像是我室友的我去问问', '2024-03-18 07:21:34');
+INSERT INTO `comments` VALUES (2, 1, 1, '确实是我室友的，我让他联系你', '2024-03-18 07:23:12');
+INSERT INTO `comments` VALUES (3, 1, 1, '搞错了，不是他的，对不起', '2024-03-18 08:29:52');
+INSERT INTO `comments` VALUES (4, 1, 1, '哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈', '2024-03-18 09:30:08');
+INSERT INTO `comments` VALUES (5, 1, 1, '没想到吧我又回来了', '2024-03-18 10:34:12');
+INSERT INTO `comments` VALUES (6, 1, 1, '还是我，我就住在这里了', '2024-03-18 11:31:52');
+INSERT INTO `comments` VALUES (7, 1, 1, '顶顶顶，这个到底是谁的', '2024-03-18 16:14:52');
+INSERT INTO `comments` VALUES (8, 1, 1, '来人速来认领啊，干啥呢', '2024-03-18 17:30:52');
+INSERT INTO `comments` VALUES (9, 1, 2, '占楼，来人看看啊', '2024-03-23 11:34:52');
+INSERT INTO `comments` VALUES (10, 4, 14, '您需要什么帮助吗？', '2024-03-23 15:31:52');
+INSERT INTO `comments` VALUES (11, 1, 13, '我的天啊，手机也能掉', '2024-03-23 15:34:52');
+INSERT INTO `comments` VALUES (12, 1, 1, '真是奇怪，这年头还有人会忘了这个东西', '2024-03-23 15:37:57');
+INSERT INTO `comments` VALUES (13, 1, 1, '怪哉怪哉', '2024-03-23 15:40:25');
 
 -- ----------------------------
 -- Table structure for lostandfound
@@ -75,12 +80,12 @@ CREATE TABLE `lostandfound`  (
   `time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '丢失或拾取时间',
   `imageUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '描述',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '联系人姓名',
-  `ContactInformation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系方式',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系人姓名',
+  `contactInformation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系方式',
   `userid` int NOT NULL COMMENT '用户id',
   `type` int NOT NULL COMMENT '拾取或者丢失0为丢失，1为拾取',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lostandfound
@@ -111,6 +116,9 @@ INSERT INTO `lostandfound` VALUES (23, 'vivo手机z50s哈哈版', '一操场外�
 INSERT INTO `lostandfound` VALUES (24, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
 INSERT INTO `lostandfound` VALUES (25, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
 INSERT INTO `lostandfound` VALUES (26, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
+INSERT INTO `lostandfound` VALUES (43, '测试发帖', '测试发帖', '2024-03-23', '/img/lostandfound/584b2cc6-dd61-4187-8840-0167a57868b1.jpg', '测试发帖', '测试发帖', '测试发帖', 1, 0);
+INSERT INTO `lostandfound` VALUES (45, '测试发帖2', '测试发帖2', '2024-03-23', '/img/lostandfound/3b1ed65c-b0b1-46da-abd3-d4ad40beb96f.jpg', '测试发帖2', '测试发帖2', '测试发帖2', 1, 0);
+INSERT INTO `lostandfound` VALUES (46, '测试发帖3', '测试发帖3', '2024-03-23', '/img/lostandfound/09ced892-5594-427c-a05f-4581124225a0.jpg', '测试发帖3', '测试发帖3', '测试发帖3', 1, 0);
 
 -- ----------------------------
 -- Table structure for swiper

@@ -3,6 +3,10 @@ server:
   port: 8088
 
 spring:
+  resources:
+    static-locations:
+      - classpath:/static/
+
   devtools:
     restart:
       enabled: true
@@ -25,3 +29,12 @@ mybatis-plus:
 logging:
   level:
     com.example.ncmashd: trace
+
+file:
+  upload:
+    img:
+      avatar: /static/img/avatar/
+      bg: /static/img/bg/
+      campusinfo: /static/img/campusinfo/
+      lostandfound: /static/img/lostandfound/
+      swiper: /static/img/swiper/

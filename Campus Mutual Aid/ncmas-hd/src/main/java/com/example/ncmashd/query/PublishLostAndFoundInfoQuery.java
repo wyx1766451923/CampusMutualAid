@@ -1,12 +1,9 @@
-package com.example.ncmashd.entity;
+package com.example.ncmashd.query;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("lostandfound")
-public class LostAndFound {
+public class PublishLostAndFoundInfoQuery {
     private Integer id;
     private String goodsName;
     private String address;
@@ -14,19 +11,8 @@ public class LostAndFound {
     private String imageUrl;
     private String description;
     private String name;
-
     private String contactInformation;
 
     private Integer userid;
     private Integer type;
-    @TableField(exist = false)
-    private User user;
-
 }
-
-
-
-
-
-
-
