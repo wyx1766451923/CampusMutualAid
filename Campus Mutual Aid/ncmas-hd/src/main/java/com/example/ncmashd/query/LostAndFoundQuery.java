@@ -9,4 +9,5 @@ public class LostAndFoundQuery {
     private Integer type = 0;
     private String goodsName;
     private String time;
+    private Integer userid;
 }

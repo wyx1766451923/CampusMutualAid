@@ -14,7 +14,6 @@
             <el-menu-item index="/home/index">首页</el-menu-item>
             <el-menu-item index="/home/lostAndFound">失物招领</el-menu-item>
             <el-menu-item index="/home/resourceSharing">资源共享</el-menu-item>
-            <el-menu-item index="/home/expressPickup">快递代取</el-menu-item>
             <el-menu-item index="/home/idleTransfer">闲置转让</el-menu-item>
         </el-menu>
     </div>
@@ -62,12 +61,19 @@ const handleLogin=()=>{
 }
 const handleCommand=(command)=>{
     if(command=="personalCenter"){
-        console.log("turn to person")
+        router.push({
+            path:'/home/personalCenter'
+        })
     }
     if(command=="logout"){
         localStorage.removeItem("isLogin")
         localStorage.removeItem("userinfo")
-        location.reload()
+        router.push({
+            path:'/home'
+        }).then(()=>{
+            location.reload()
+        })
+        
     }
 }
 onMounted(() => {

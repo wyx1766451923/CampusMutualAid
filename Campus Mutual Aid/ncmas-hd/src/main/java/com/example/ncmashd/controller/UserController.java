@@ -1,10 +1,9 @@
 package com.example.ncmashd.controller;
 
-import com.example.ncmashd.entity.LostAndFound;
 import com.example.ncmashd.entity.User;
 import com.example.ncmashd.query.LoginQuery;
 import com.example.ncmashd.service.UserService;
-import com.example.ncmashd.uils.JsonResult;
+import com.example.ncmashd.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

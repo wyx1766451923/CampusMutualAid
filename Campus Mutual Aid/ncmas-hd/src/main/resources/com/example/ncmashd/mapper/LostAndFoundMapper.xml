@@ -18,7 +18,9 @@
             <if test="time != null and time != ''">
                 and time = #{time}
             </if>
-
+            <if test="userid != 0">
+                and userid = #{userid}
+            </if>
         </where>
         order by id DESC
         limit #{page},#{size}

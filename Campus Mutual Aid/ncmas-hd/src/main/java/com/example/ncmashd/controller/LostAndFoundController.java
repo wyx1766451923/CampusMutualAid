@@ -1,20 +1,16 @@
 package com.example.ncmashd.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.PageList;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.ncmashd.entity.Comments;
 import com.example.ncmashd.entity.LostAndFound;
-import com.example.ncmashd.mapper.LostAndFoundMapper;
 import com.example.ncmashd.query.CommentQuery;
 import com.example.ncmashd.query.LostAndFoundQuery;
 import com.example.ncmashd.query.PublishLostAndFoundInfoQuery;
 import com.example.ncmashd.service.LostAndFoundService;
-import com.example.ncmashd.uils.JsonResult;
+import com.example.ncmashd.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 

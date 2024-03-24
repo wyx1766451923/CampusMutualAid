@@ -1,9 +1,8 @@
 package com.example.ncmashd.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.ncmashd.query.publishCommentQuery;
 import com.example.ncmashd.service.CommentsService;
-import com.example.ncmashd.uils.JsonResult;
+import com.example.ncmashd.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -88,7 +88,7 @@ function throttle(fn,delay = 1000) {
   }
 }
 const handleCurrentChange=()=>{
-  getLostAndFoundInfo((current.value-1)*12,undefined,type.value)
+  getLostAndFoundInfo((current.value-1)*12,undefined,type.value,undefined,undefined,0)
   console.log(current.value)
 }
 const getTotal=()=>{
@@ -109,19 +109,19 @@ const getTotal=()=>{
 const handleSwitch=(typeid)=>{
   type.value = typeid
   getTotal()
-  getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value)
+  getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value,0)
 
 }
 const handleSearch=throttle(function(){
   getTotal()
-  getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value)
+  getLostAndFoundInfo(undefined,undefined,type.value,goodsinput.value,dateinput.value,0)
 },500)
 const handleReset=throttle(function(){
   goodsinput.value = ''
   dateinput.value = ''
   current.value = 1
   getTotal()
-  getLostAndFoundInfo(undefined,undefined,type.value,undefined,undefined)
+  getLostAndFoundInfo(undefined,undefined,type.value,undefined,undefined,0)
 },500)
 const handlePublish=()=>{
   const isLogin = localStorage.getItem('isLogin')
@@ -148,13 +148,14 @@ const handlePublish=()=>{
     })
   }
 }
-const getLostAndFoundInfo=(page=0,size=12,type=0,goodsinput='',dateinput='')=>{
+const getLostAndFoundInfo=(page=0,size=12,type=0,goodsinput='',dateinput='',userid=0)=>{
   http.post('/LostAndFound/getLostAndFoundPage',{
     page,
     size,
     type,
     goodsName:goodsinput,
-    time:dateinput
+    time:dateinput,
+    userid
   })
   .then(res=>{
     console.log(res.data.data)

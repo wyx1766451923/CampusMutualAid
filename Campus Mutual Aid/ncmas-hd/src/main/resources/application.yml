@@ -3,10 +3,6 @@ server:
   port: 8088
 
 spring:
-  resources:
-    static-locations:
-      - classpath:/static/
-
   devtools:
     restart:
       enabled: true
@@ -33,8 +29,8 @@ logging:
 file:
   upload:
     img:
-      avatar: /static/img/avatar/
-      bg: /static/img/bg/
-      campusinfo: /static/img/campusinfo/
-      lostandfound: /static/img/lostandfound/
-      swiper: /static/img/swiper/
+      avatar: /img/avatar/
+      bg: /img/bg/
+      campusinfo: /img/campusinfo/
+      lostandfound: /img/lostandfound/
+      swiper: /img/swiper/

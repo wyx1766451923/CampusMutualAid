@@ -1,6 +1,6 @@
 package com.example.ncmashd.controller;
 
-import com.example.ncmashd.uils.JsonResult;
+import com.example.ncmashd.utils.JsonResult;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +14,11 @@ import java.io.IOException;
 import java.util.UUID;
 @RestController
 public class UploadController {
-    @Value("/static/img/avatar")
+    @Value("/img/avatar")
     private String avatarImgPath;
-    @Value("/static/img/campusinfo")
+    @Value("/img/campusinfo")
     private String campusImgPath;
-    @Value("/static/img/lostandfound")
+    @Value("/img/lostandfound")
     private String lostandfoundImgPath;
     @PostMapping("/upload")
     public JsonResult upload(MultipartFile file, HttpServletRequest request){
@@ -52,8 +52,8 @@ public class UploadController {
             //3.采用输出流将文件二进制数据输出到新文件名称对应的文件中
             //开发阶段需要将此文件存储到src/main/resources下和target/classes下，项目上线后就只需要存储到target/classes下
 //开发路径
-            String path1 = "G:/毕业设计/Campus Mutual Aid/ncmas-hd/src/main/resources" + fileSavePath;
-            String path2 = "G:/cqutmrxmsx/mrhd/target/classes" + fileSavePath;
+            String path1 = "G:/毕业设计/Campus Mutual Aid/ncmas-hd" + fileSavePath;
+            String path2 = "G:/毕业设计/Campus Mutual Aid/ncmas-hd/classes" + fileSavePath;
 
             //上线
 //            String path1 = "c:/mrhd" + fileSavePath;

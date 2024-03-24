@@ -34,10 +34,6 @@ const router = createRouter({
           component:()=>import('../views/ResourceSharing/index.vue')
         },
         {
-          path:'expressPickup',
-          component:()=>import('../views/ExpressPickup/index.vue')
-        },
-        {
           path:'idleTransfer',
           component:()=>import('../views/IdleTransfer/index.vue')
         },
@@ -48,6 +44,10 @@ const router = createRouter({
         {
           path:'LostAndFoundDetail/:id',
           component:()=>import('../views/LostAndFoundDetail/index.vue')
+        },
+        {
+          path:'personalCenter',
+          component:()=>import('../views/PersonalCenter/index.vue')
         }
       ]
     }
