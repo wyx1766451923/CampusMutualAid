@@ -47,4 +47,54 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             return map;
         }
     }
+
+    @Override
+    public Map<String, Object> updateUserInfoById(LoginQuery query) {
+        Map<String,Object> map = new HashMap<>();
+        User user = new User();
+        user.setId(query.getId());
+        user.setNickname(query.getNickname());
+        Integer res = baseMapper.updateById(user);
+        if(res<=0){
+            map.put("update","error");
+        }else{
+            map.put("update","ok");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> updateAvatarByid(LoginQuery query) {
+        Map<String,Object> map = new HashMap<>();
+        User user = new User();
+        user.setId(query.getId());
+        user.setAvatar(query.getAvatar());
+        Integer res = baseMapper.updateById(user);
+        if(res<=0){
+            map.put("update","error");
+        }else{
+            map.put("update","ok");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> updatePasswordById(LoginQuery query) {
+        Map<String,Object> map = new HashMap<>();
+        User user = baseMapper.selectById(query.getId());
+        if(user.getPassword().equals(query.getPassword())){
+            map.put("update","equal");
+        }else{
+            user.setId(query.getId());
+            user.setPassword(query.getPassword());
+            Integer res = baseMapper.updateById(user);
+            if(res<=0){
+                map.put("update","error");
+            }else{
+                map.put("update","ok");
+            }
+        }
+
+        return map;
+    }
 }

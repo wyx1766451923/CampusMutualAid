@@ -50,7 +50,7 @@
                     <el-upload
                         ref="upload"
                         class="upload-demo"
-                        :action="uploadUrl"
+                        :action="uploadUrl+'/losandfoundimg'"
                         :limit="1"
                         :on-exceed="handleExceed"
                         :auto-upload="false"

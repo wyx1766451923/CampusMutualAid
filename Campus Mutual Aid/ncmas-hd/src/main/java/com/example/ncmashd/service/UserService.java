@@ -10,4 +10,10 @@ public interface UserService extends IService<User> {
     Map<String, Object> login(LoginQuery query);
 
     Map<String, Object> register(LoginQuery query);
+
+    Map<String, Object> updateUserInfoById(LoginQuery query);
+
+    Map<String, Object> updateAvatarByid(LoginQuery query);
+
+    Map<String, Object> updatePasswordById(LoginQuery query);
 }

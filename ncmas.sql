@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 24/03/2024 18:44:33
+ Date: 25/03/2024 18:33:36
 */
 
 SET NAMES utf8mb4;
@@ -85,7 +85,7 @@ CREATE TABLE `lostandfound`  (
   `userid` int NOT NULL COMMENT '用户id',
   `type` int NOT NULL COMMENT '拾取或者丢失0为丢失，1为拾取',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lostandfound
@@ -115,8 +115,9 @@ INSERT INTO `lostandfound` VALUES (22, 'vivo手机z50s哈哈版', '一操场外�
 INSERT INTO `lostandfound` VALUES (23, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
 INSERT INTO `lostandfound` VALUES (24, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
 INSERT INTO `lostandfound` VALUES (25, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
-INSERT INTO `lostandfound` VALUES (26, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 1, 1);
-INSERT INTO `lostandfound` VALUES (48, '测试发帖1', '测试发帖1', '2024-03-16', '/img/lostandfound/ebfaf2b6-2d69-4367-b849-a0194cd868c7.jpg', '测试发帖1', '测试发帖1', '测试发帖1', 1, 0);
+INSERT INTO `lostandfound` VALUES (26, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 4, 1);
+INSERT INTO `lostandfound` VALUES (48, '测试发帖1', '测试发帖1', '2024-03-16', '/img/lostandfound/ebfaf2b6-2d69-4367-b849-a0194cd868c7.jpg', '测试发帖1', '测试发帖1', '测试发帖1', 4, 0);
+INSERT INTO `lostandfound` VALUES (49, '小猫小猫', '小猫小猫', '2024-03-25', '/img/lostandfound/0f367a66-690b-4b63-b6af-d8fff4a4d107.jpg', '小猫小猫小猫小猫小猫小猫', '小猫小猫', '1234567891', 4, 0);
 
 -- ----------------------------
 -- Table structure for swiper
@@ -154,6 +155,6 @@ CREATE TABLE `user`  (
 -- ----------------------------
 INSERT INTO `user` VALUES (1, '1766451923', '123456', '/img/avatar/avatar1.png', 1, '红树');
 INSERT INTO `user` VALUES (3, '1766451921', '123456', '/img/avatar/avatar1.png', 0, 'hahaha');
-INSERT INTO `user` VALUES (4, '15523083645', '123456', '/img/avatar/avatar1.png', 0, '大家帮用户');
+INSERT INTO `user` VALUES (4, '15523083645', '123456789', '/img/avatar/dfb00836-93dc-4f2b-a978-e69ea46f1ecf.jpg', 0, '顶级逆天');
 
 SET FOREIGN_KEY_CHECKS = 1;

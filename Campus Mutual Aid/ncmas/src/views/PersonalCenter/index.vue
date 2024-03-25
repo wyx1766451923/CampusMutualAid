@@ -36,7 +36,7 @@
               我的帖子
             </div>
             <div class="posts" ref="postsRef" @scroll="handleScroll">
-              <div class="postitem" v-for="postitem in posts" :key="postitem.id">
+              <div class="postitem" v-for="postitem in posts" :key="postitem.id" @click=gotoDetail(postitem.id)>
                 <div class="time">
                   {{ postitem.time }}
                 </div>
@@ -59,13 +59,81 @@
             </div>
           </div>
           <div class="myinfo" v-show="tabValue=='myinfo'">
-            2
+            <div class="infoTopic">
+              我的信息
+            </div>
+            <div class="infos">
+              <div class="myavatar">
+                <el-image style="width: 100%; height: 100%" :src="publicUrl+userinfo.avatar" fit="cover" />
+              </div>
+              <div class="infocontent">
+                <el-form
+                  label-position="left"
+                  label-width="auto"
+                  :model="myinfomodel"  
+                >
+                  <el-form-item label="账号">
+                    <el-input v-model="myinfomodel.username" disabled/>
+                  </el-form-item>
+                  <el-form-item label="昵称" required>
+                    <el-input v-model="myinfomodel.nickname" />
+                  </el-form-item>
+                  <el-form-item label="权限">
+                    <el-select v-model="myinfomodel.permissions" placeholder="Select" >
+                      <el-option
+                        v-for="item in permisOption"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                        disabled
+                      />
+                    </el-select>
+                  </el-form-item>
+                </el-form>
+              </div>
+            </div>
+            <div class="handleUpdate">
+              <el-button type="primary" @click="handleUpdate">
+                保存修改
+              </el-button>
+            </div>
           </div>
-          <div class="myavatar" v-show="tabValue=='myavatar'">
-            3
+          <div class="myavatarupdate" v-show="tabValue=='myavatar'">
+            <div class="avatarTopic">
+              我的头像
+            </div>
+            <div class="avatarcontent">
+              <el-upload
+                class="avatar-uploader"
+                :action="uploadUrl+'/avatarimg'"
+                :show-file-list="false"
+                :limit="1"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+              >
+                <img v-if="userinfo.avatar" :src="publicUrl+userinfo.avatar" class="avatarimg" />
+                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              </el-upload>
+              
+            </div>
           </div>
           <div class="mysecurity" v-show="tabValue=='mysecurity'">
-            4
+            <div class="securityTopic">
+              账号安全
+            </div>
+            <div class="securitycontent">
+              <el-form :model="mysecurityMoel">
+                  <el-form-item label="修改密码" >
+                      <el-input v-model="mysecurityMoel.password" placeholder="请输入密码" show-password/>
+                  </el-form-item>
+                  <el-form-item label="确认密码" >
+                      <el-input v-model="mysecurityMoel.confirmPassword" placeholder="请确认密码" show-password />
+                  </el-form-item>
+                  <el-form-item s>
+                      <el-button type="primary" @click="updetePassword" >保存修改</el-button>
+                  </el-form-item>
+              </el-form>
+            </div>
           </div>
         </div>
       </div>
@@ -74,9 +142,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+
+import { onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import http from '../../../api/http';
-import { lostAndFoundBackgroundImage, publicUrl } from '../../../api/util';
+import { lostAndFoundBackgroundImage, publicUrl, uploadUrl } from '../../../api/util';
+import { ElMessage, ElMessageBox } from 'element-plus'
 const userinfo = ref('')
 const tabValue = ref('myposts')
 const page=ref(1)
@@ -84,9 +155,29 @@ const size=ref(2)
 const posts = ref([])
 const postsRef = ref('')
 const postCount = ref(2)
+const router = useRouter()
 const switchTab=(value)=>{
   tabValue.value = value
 }
+const permisOption = [
+  {
+    label:'管理员',
+    value:1
+  },
+  {
+    label:'普通用户',
+    value:0
+  }
+]
+const myinfomodel = reactive({
+  username: '',
+  nickname: '',
+  permissions: 0,
+})
+const mysecurityMoel = reactive({
+  password:'',
+  confirmPassword: '',
+})
 const tabs = [
   {
     label:'我的帖子',
@@ -117,6 +208,140 @@ function throttle(fn,delay = 1000) {
     }
   }
 }
+const updatePasswordById=()=>{
+  http.post('/user/updatePasswordById',{
+    id:userinfo.value.id,
+    password:mysecurityMoel.password
+  })
+  .then(res=>{
+    if(res.data.data.update=='equal'){
+      ElMessage({
+        message: '本次密码无法与上次相同，请修改',
+        type: 'error',
+      })
+    }else{
+      if(res.data.data.update=='ok'){
+          localStorage.removeItem("isLogin")
+          localStorage.removeItem("userinfo")
+          router.push({
+              path:'/login'
+          })
+      }else{
+        ElMessage({
+          message: '修改失败！请联系管理员',
+          type: 'error',
+        })
+      }
+    }
+    
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+}
+const updetePassword=()=>{
+
+  console.log(mysecurityMoel)
+  if(mysecurityMoel.password!=mysecurityMoel.confirmPassword || (mysecurityMoel.password == '' || mysecurityMoel.confirmPassword=='')){
+    ElMessage({
+      message: '两次密码不一致或为空',
+      type: 'warning',
+    })
+  }else{
+    if(mysecurityMoel.password.length<6 || mysecurityMoel.password.length>12){
+      ElMessage({
+        message: '密码长度应该为6-12',
+        type: 'warning',
+      })
+    }else{
+      updatePasswordById()
+    }
+  }
+}
+const deleteAvatar=(path,type)=>{
+  http.post('/deleteimg',{
+    path,
+    type
+  })
+  .then(res=>{
+    console.log(res)
+  })
+  .catch(err=>{
+    console,log(err)
+  })
+}
+const updateAvatarByid=(imageUrl,userid)=>{
+  http.post('/user/updateAvatarByid',{
+    avatar:imageUrl,
+    id:userid
+  })
+  .then(res=>{
+    if(res.data.data.update=='ok'){
+      console.log('更新成功')
+      userinfo.value.avatar = imageUrl
+      localStorage.setItem('userinfo',JSON.stringify(userinfo.value))
+      ElMessage({
+        message: '修改成功！',
+        type: 'success',
+      })
+      location.reload()
+    }else{
+      ElMessage({
+        message: '修改失败！请联系管理员',
+        type: 'error',
+      })
+    }
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+}
+const handleAvatarSuccess=(response,uploadFile)=>{
+  const newimageUrl = response.data
+  const oldimageUrl = userinfo.value.avatar
+  deleteAvatar(oldimageUrl,0)
+  updateAvatarByid(newimageUrl,userinfo.value.id)
+
+
+  console.log(oldimageUrl)
+}
+const getmyinfomodel = ()=>{
+  myinfomodel.username = userinfo.value.username
+  myinfomodel.permissions = userinfo.value.permissions
+  myinfomodel.nickname = userinfo.value.nickname
+}
+const handleUpdate=()=>{
+  console.log(myinfomodel)
+  http.post('/user/updateUserInfoById',{
+    id:userinfo.value.id,
+    nickname:myinfomodel.nickname
+  })
+  .then(res=>{
+    if(res.data.data.update=='ok'){
+      console.log('更新成功')
+      userinfo.value.nickname = myinfomodel.nickname
+      localStorage.setItem('userinfo',JSON.stringify(userinfo.value))
+      ElMessage({
+        message: '修改成功！',
+        type: 'success',
+      })
+      location.reload()
+    }else{
+      ElMessage({
+        message: '修改失败！请联系管理员',
+        type: 'error',
+      })
+    }
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+}
+const gotoDetail = (postid)=>{
+  router.push({
+    path:`/home/lostAndFoundDetail/${postid}`
+  })
+}
 const handleScroll=throttle(function(){
       const postsref = postsRef.value
       if (postsref.scrollTop + postsref.clientHeight >= postsref.scrollHeight-1) {
@@ -144,18 +369,16 @@ const getLostAndFoundInfo=(page=0,size=2,type=null,goodsinput='',dateinput='',us
     console.log(err)
   })
 }
-const handleToGoodsInfoDetail=(id)=>{
-  console.log(id)
-  router.push({
-    path:`/home/lostAndFoundDetail/${id}`
-  })
-}
+
 const getUserinfo=()=>{
   userinfo.value =  JSON.parse(localStorage.getItem('userinfo'))
+  getmyinfomodel()
 }
 onMounted(()=>{
   getUserinfo()
   getLostAndFoundInfo(undefined,undefined,null,undefined,undefined,userinfo.value.id)
+  
+
 })
 </script>
 
@@ -255,6 +478,7 @@ onMounted(()=>{
               margin: 10px 20px 20px 20px;
               padding-bottom: 20px;
               border-bottom: 1px solid rgb(193, 190, 190);
+              cursor: pointer;
               .time{
                 font-size: 16px;
                 color: gray;
@@ -297,12 +521,72 @@ onMounted(()=>{
         }
         .myinfo{
 
+          .infoTopic{
+            padding: 10px 0 15px 20px;
+            border-bottom:1px solid rgb(217, 216, 216) ;
+          }
+          .infos{
+            margin: 10px 20px;
+            .myavatar{
+              width: 180px;
+              height: 180px;
+              margin: 0 auto;
+              border-radius: 50%;
+              overflow: hidden;
+            }
+            .infocontent{
+              margin-top: 20px;
+              display: flex;
+              justify-content: center;
+              .el-form{
+                width: 300px;
+              }
+            }
+          }
+          .handleUpdate{
+            margin-top: 20px;
+            text-align: center;
+          }
+
         }
-        .myavatar{
+        .myavatarupdate{
+          .avatarTopic{
+            padding: 10px 0 15px 20px;
+            border-bottom:1px solid rgb(217, 216, 216) ;
+          }
+          .avatarcontent{
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            margin-top: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            .avatar-uploader{
+              width: 100%;
+              height: 100%;
+              .el-upload{
+                width: 100%;
+                height: 100%;
+                .avatarimg{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+            }
+          }
+
 
         }
         .mysecurity{
-
+          .securityTopic{
+            padding: 10px 0 15px 20px;
+            border-bottom:1px solid rgb(217, 216, 216) ;
+          }
+          .securitycontent{
+            width: 200px;
+            margin: 0 auto;
+            margin-top: 150px;
+          }
         }
       }
     }

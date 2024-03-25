@@ -103,7 +103,7 @@ const onLogin = throttle(function(){
     if(myType.value == 0){
         if(formLabelAlign.username!='' && formLabelAlign.password!='' && confirmPassword.value != ''){
             if(formLabelAlign.password == confirmPassword.value){
-                if(formLabelAlign.username.length<8 || formLabelAlign.username.length>10){
+                if(formLabelAlign.username.length<6 || formLabelAlign.username.length>10){
                     ElMessage({
                         message: '账号长度应该在6-10！',
                         type: 'warning',

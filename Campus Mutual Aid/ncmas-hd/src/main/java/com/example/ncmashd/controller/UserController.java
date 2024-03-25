@@ -54,4 +54,40 @@ public class UserController {
             return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
         }
     }
+    @RequestMapping(value = "/updateUserInfoById",method = RequestMethod.POST)
+    public JsonResult updateUserInfoById(@RequestBody LoginQuery query){
+        try{
+
+            Map<String,Object> map = userService.updateUserInfoById(query);
+            return JsonResult.success(map);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
+    @RequestMapping(value = "/updateAvatarByid",method = RequestMethod.POST)
+    public JsonResult updateAvatarByid(@RequestBody LoginQuery query){
+        try{
+
+            Map<String,Object> map = userService.updateAvatarByid(query);
+            return JsonResult.success(map);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
+    @RequestMapping(value = "/updatePasswordById",method = RequestMethod.POST)
+    public JsonResult updatePasswordById(@RequestBody LoginQuery query){
+        try{
+
+            Map<String,Object> map = userService.updatePasswordById(query);
+            return JsonResult.success(map);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.error("出现了一个问题，请联系管理员"+e.getMessage());
+        }
+    }
 }
