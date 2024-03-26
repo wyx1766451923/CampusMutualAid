@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 25/03/2024 18:33:36
+ Date: 26/03/2024 15:28:52
 */
 
 SET NAMES utf8mb4;
@@ -118,6 +118,28 @@ INSERT INTO `lostandfound` VALUES (25, 'vivo手机z50s哈哈版', '一操场外�
 INSERT INTO `lostandfound` VALUES (26, 'vivo手机z50s哈哈版', '一操场外跑道健步处杠杠', '2024-03-17', '/img/lostandfound/lost1.png', '在操场跑道外部丢失，拾取到请联系我', '王大锤', 'QQ:1766451923', 4, 1);
 INSERT INTO `lostandfound` VALUES (48, '测试发帖1', '测试发帖1', '2024-03-16', '/img/lostandfound/ebfaf2b6-2d69-4367-b849-a0194cd868c7.jpg', '测试发帖1', '测试发帖1', '测试发帖1', 4, 0);
 INSERT INTO `lostandfound` VALUES (49, '小猫小猫', '小猫小猫', '2024-03-25', '/img/lostandfound/0f367a66-690b-4b63-b6af-d8fff4a4d107.jpg', '小猫小猫小猫小猫小猫小猫', '小猫小猫', '1234567891', 4, 0);
+
+-- ----------------------------
+-- Table structure for resourcesharing
+-- ----------------------------
+DROP TABLE IF EXISTS `resourcesharing`;
+CREATE TABLE `resourcesharing`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `resourcename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '资源名字',
+  `resourcetype` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '资源类型',
+  `contactinformation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系方式',
+  `access` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '获取方式',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '详细描述',
+  `imageUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片地址',
+  `userid` int NOT NULL COMMENT 'userid',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of resourcesharing
+-- ----------------------------
+INSERT INTO `resourcesharing` VALUES (1, '2024考研资料', '实物', '电话12345678965', '线下取物', '2024年考研资料，要的联系我，商量取资料的地方', '/img/resourcesharing/rss1.png', 4);
+INSERT INTO `resourcesharing` VALUES (2, '2024考研资料', '实物', 'qq1599874658', '线下取物', '英语政治都有，需要408的也有', '/img/resourcesharing/rss1.png', 4);
 
 -- ----------------------------
 -- Table structure for swiper

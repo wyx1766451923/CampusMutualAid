@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ncmashd.mapper.ResourceSharingMapper">
+    <select id="getResourceSharingCount" resultType="java.lang.Long">
+        select count(*)
+        from resourcesharing r left join user u on r.userid = u.id
+    </select>
+    <select id="getResourceSharingPage" resultMap="getResourceSharingMap">
+        select r.*,
+                u.username,u.avatar,u.id,u.nickname
+        from resourcesharing r left join user u on r.userid = u.id
+        <where>
+            <if test="userid != 0">
+                and userid = #{userid}
+            </if>
+        </where>
+        order by r.id DESC
+        limit #{page},#{size}
+
+    </select>
+    <resultMap id="getResourceSharingMap" type="com.example.ncmashd.entity.ResourceSharing">
+        <id column="id" property="id" />
+        <result column="userid" property="userid" />
+        <result column="resourcename" property="resourcename" />
+        <result column="contactinformation" property="contactinformation" />
+        <result column="access" property="access" />
+        <result column="description" property="description" />
+        <result column="resourcetype" property="resourcetype" />
+        <result column="imageUrl" property="imageUrl" />
+        <association property="user" javaType="com.example.ncmashd.entity.User">
+            <id column="id" property="id" />
+            <result column="username" property="username" />
+            <result column="nickname" property="nickname" />
+            <result column="password" property="password" />
+            <result column="avatar" property="avatar" />
+            <result column="Permissions" property="Permissions" />
+        </association>
+    </resultMap>
+</mapper>
