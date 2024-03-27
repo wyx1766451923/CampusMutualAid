@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 26/03/2024 15:28:52
+ Date: 27/03/2024 18:28:02
 */
 
 SET NAMES utf8mb4;
@@ -133,13 +133,14 @@ CREATE TABLE `resourcesharing`  (
   `imageUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片地址',
   `userid` int NOT NULL COMMENT 'userid',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resourcesharing
 -- ----------------------------
 INSERT INTO `resourcesharing` VALUES (1, '2024考研资料', '实物', '电话12345678965', '线下取物', '2024年考研资料，要的联系我，商量取资料的地方', '/img/resourcesharing/rss1.png', 4);
 INSERT INTO `resourcesharing` VALUES (2, '2024考研资料', '实物', 'qq1599874658', '线下取物', '英语政治都有，需要408的也有', '/img/resourcesharing/rss1.png', 4);
+INSERT INTO `resourcesharing` VALUES (3, '最新的java网络课程', '网络资源', '微信15598658459', '资源链接', 'www.baidu.com', '/img/resourcesharing/java.png', 1);
 
 -- ----------------------------
 -- Table structure for swiper
